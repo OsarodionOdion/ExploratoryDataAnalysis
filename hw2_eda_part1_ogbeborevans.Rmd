@@ -1,0 +1,320 @@
+---
+title: "HW2 - EDA with R - Part 1: Statistics and Plotting"
+author: "misken"
+date: "January 9, 2022"
+output:
+  html_document:
+    df_print: paged
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Step 1 - Familiarize yourself with the data and the assignment
+
+In this assignment you'll do some exploratory data analysis
+with R on a dataset of housing prices. The version of
+this data that we'll be using is based on a Kaggle dataset -
+https://www.kaggle.com/harlfoxem/housesalesprediction. I've made 
+some changes and you can find a data dictionary in the same
+folder as this file.
+
+As we did in the R related sessions, you'll be editing an R Markdown document to
+do some analysis as well as to document the
+steps you did (and answer some questions I'll throw at you).
+
+You'll notice a few "Hacker Extra Credit" tasks
+thrown in. These are for those of you who want to go a little above and beyond
+and attempt some more challenging tasks. And, feel free to do a some free form
+Hacker Extra style work yourself - in other words, do something beyond what
+was asked. You'll learn more.
+
+## Step 2 - Create a new R Markdown document based on this document
+
+Save this file as a new R Markdown document and name it **hw2_eda_part1_[your last name].Rmd**. Mine would
+be called **hw2_eda_part1_isken.Rmd**. Save it into the same folder as this file. 
+
+This will be your working directory. 
+
+Create a new R Project based on this working directory.
+
+## Step 3 - Explore data folder
+
+Inside of the main project folder you'll find the data files for this assignment in a subfolder called `data/`.
+
+- **kc_house_data_original.csv**
+- **kc_house_data.Rdata**
+
+
+The first file is from the Kaggle site for this dataset. I made some changes and created the Rdata file which contains the dataframe that you'll be using for your analysis.
+
+
+You might want to use shell commands or a text editor like Geany to snoop the csv file a bit.
+
+
+## Step 4 - Complete the following R tasks and answer questions
+
+Now you'll need to complete the following tasks in R. Just like we did in class, you should
+use a combination of markdown text (be concise, no need to write tons of text) 
+to explain what you are doing and R code chunks to actually do it.
+When you are done, use the "Knit" button to generate an HTML file from your R Markdown.
+
+Note that if you have errors in your R code, **knitr** will stop at the error
+and won't create an html file. Sooo, you should comment out R code that has
+errors and write a little comment stating that it's an error and a possible explanation for the error. Of course, try to fix the errors. Keep doing this
+until you successfully knit an html file based on your R Markdown document.
+You'll be submitting both the html file as well as the Rmd file.
+
+You'll notice that I've left some empty code chunks
+as well as some partially filled in code chunks. Of course, feel free to
+add more code chunks as needed.
+
+Let's load a few libraries we'll need:
+
+```{r}
+library(dplyr)
+library(ggplot2)
+```
+
+
+### Problem 1 - Load the Rdata file
+
+Let's load the data from the Rdata file.
+
+```{r load_data}
+load("data/kc_house_data.Rdata")
+
+```
+
+
+Check the structure of the data.frame using `str` and use the `summary` function to begin exploring the data. 
+
+```{r str_summary}
+str(kc_house_data)
+summary(kc_house_data)
+
+```
+
+**QUESTION** What does each row represent? 
+
+> PUT ANSWER HERE. NOTICE IT WILL GET FORMATTED AS A BLOCK QUOTE WHICH MAKES IT EASY
+FOR ME TO FIND YOUR ANSWER. PLEASE USE BLOCK QUOTES WHENEVER YOU ARE TYPEING AN ANSWER OR DISCUSSION COMMENTS
+
+**QUESTION** Are there any NA values? 
+
+> PUT ANSWER HERE
+
+
+**Unless otherwise specified, you should use the ggplot2 package for all of the following plots.**
+
+### Problem 2 - Basic plots
+
+Create a histogram for `price` and for `sqft_living`.
+
+In addition, compute and display the following statistics for price and for sqft_living:
+
+* mean and median
+* standard deviation
+* min, max and range
+* 95th and 99th percentile
+* IQR
+* coefficient of variation
+
+There are few different ways to print out a string that contains some literal text along with the value of some variable. For example, let's compute the mean of `price` and store it in a variable.
+
+```{r}
+price_mean <- mean(kc_house_data$price)
+price_mean
+```
+
+If I wanted to create a little message such as "Mean price = 54088.1", I could use a few different approaches. An old standby is the R `paste()` function.
+
+```{r}
+paste("Mean price =", price_mean)
+```
+
+A few things to note:
+
+* by default, `paste` will concatenate the list of arguments AND put a space between them (see help(paste) to control the delimiter)
+* the value prints in a default format
+
+Another approach is to use the venerable `sprintf()` function, which is actually based on "C-style printing" from the C language. A nice intro to this is at https://www.gastonsanchez.com/r4strings/c-style-formatting.html.
+
+```{r}
+sprintf("Mean price = %.2f", price_mean)
+```
+
+If you wrap this with `cat()` function, you can get rid of the output number prefix.
+
+```{r}
+cat(sprintf("Mean price = %.2f", price_mean))
+```
+
+```{r summary_stats}
+
+```
+
+
+```{r histos}
+
+```
+
+
+Write a short paragraph describing the distribution of of these two variables.
+
+> PUT ANSWER HERE
+
+Below I demo how you can include *inline code* to make even your summary comments
+more dynamic. These inline code snippets get run during knitting.
+
+Repeat the histogram for `price` but make the following style changes to the plot.
+
+* Add an approprate graph title 
+* Change y-axis label to "Number of houses"
+* Change x-axis label to "Selling price"
+* Change the colors of the bars to something other than the default
+
+```{r histo_stylechanges}
+
+```
+
+Now create a set of histograms for `price` in which you facet by condition
+
+```{r histos_price}
+# ggplot(???) + 
+#   geom_histogram(aes(x=???)) +
+#   ???
+```
+
+
+Since the number of houses varies by `condition`, create a new version of the plot above but modify so that the y-axis shows frequency percentages (or density values) instead of
+counts. Hint: See the [documentation](https://ggplot2.tidyverse.org/reference/geom_histogram.html)
+
+```{r histos_condition_density}
+
+```
+
+Now create boxplots and violin plots for the same two variables - `price` and `sqft_living`. However, you'll
+see that for both of these plot types, ggplot wants an `x` aesthetic to act as a grouping variable. Use the `condition` field as your `x` aesthetic. Note anything of interest revealed by these plots.
+
+```{r box_violin}
+# Boxplots and violin plots
+
+```
+
+
+> PUT SUMMARY COMMENTS HERE
+
+
+Repeat the histogram of `sqft_living` but only for houses with a `condition` equal to 3. You can either use
+dplyr to do the filtering or boolean indexing (see intro to dataframes Rmd file). 
+
+**HACKER EXTRA:** In addition, overlay a kernel density plot on top of the histogram.
+
+```{r histo_cond3}
+
+
+
+```
+
+
+
+Create boxplots and/or violin plots showing how prices compare with respect to the number of bedrooms.
+
+Summarize your findings.
+
+```{r boxplots_bedrooms}
+
+
+```
+
+> PUT YOUR SUMMARY COMMENTS HERE
+
+### Problem 3 - Basic bar chart
+
+Create a bar chart showing the number of houses by grade. 
+
+```{r bar_grade}
+
+
+```
+
+
+### Problem 4 - Basic scatter plots
+
+Create a scatter plot of prices vs sqft_living.
+
+```{r xy_price_sqft}
+
+```
+
+
+Create a modified version of the above scatter plot in which:
+
+* only houses less than 3000 square feet are included,
+* the point color is mapped to condition 
+
+You could also facet by condition if you think that makes the plot easier to interpret.
+
+```{r xy_price_sqft_condition}
+
+```
+
+> PUT YOUR SUMMARY COMMENTS HERE
+
+Make one more scatter plot involving `price` and `sqft_living`. But, figure out a way to either change the axis scales or 
+the plotted data itself to use a base 10 logarithmic scale (or transform).
+Write a short paragraph on why one might want to use a log scale or log
+transform of data when plotting.
+
+
+
+### Problem 5 - correlations
+
+Create a correlation matrix and a correlation plot (using corrplot library) which includes the following variables:
+
+* price (col 3)
+* bedrooms (col 4)
+* bathrooms (col 5)
+* sqft_living (col 6)
+* sqft_lot (col 7)
+* floors (col 8)
+* sqft_above (col 13)
+* sqft_basement (col 14)
+* sqft_living15 (col 20)
+* sqft_lot15 (col 21)
+* age (col 22)
+
+```{r correlation_matrix}
+
+```
+
+```{r correlation_plot}
+
+```
+
+
+> Discuss your findings.
+
+
+
+### Problem 6 - automated EDA
+
+There are a number of packages that try to help automate the process of initial 
+EDA of a dataframe. I want you to try out the skimr package. If the package
+isn't already installed, just install it. Run the `skim()` function on `kc_house_data` and then write a few short paragraphs describing the types of outputs you get from skimr.
+
+```{r lib_skimr}
+library(skimr)
+```
+
+```{r skim}
+# Use skim() function on kc_house_data
+
+```
+
+
+## Deliverables for this problem
+
+Make sure you knit your Rmd file. IMPORTANT: You might notice that there's a file with the same base name as your file and with a .nb.html extension. The "nb" stands for "notebook" and that file is created on the fly as you are working in your notebook. DO NOT SUBMIT THAT FILE. YOU MUST DO A "knit to html" from the toolbar which will generate a file with just the .html extension. As discussed earlier, if you have errors, your document won't knit. Comment out error lines and put a comment in saying that you couldn't get the code chunk to work. After your file is knitted into an html file, simply create a compressed archive (either tar.gz or .zip) of your project folder and upload the compressed archive file into Moodle.
