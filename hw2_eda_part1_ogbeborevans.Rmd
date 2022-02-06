@@ -96,14 +96,19 @@ summary(kc_house_data)
 
 ```
 
-**QUESTION** What does each row represent? 
+**QUESTION** What does each row represent?
 
-> PUT ANSWER HERE. NOTICE IT WILL GET FORMATTED AS A BLOCK QUOTE WHICH MAKES IT EASY
-FOR ME TO FIND YOUR ANSWER. PLEASE USE BLOCK QUOTES WHENEVER YOU ARE TYPEING AN ANSWER OR DISCUSSION COMMENTS
+> Each row provides a vector on the properties ()unique identifier, date of sale, price, number of bedrooms etc.) of each home sold. 
 
 **QUESTION** Are there any NA values? 
 
-> PUT ANSWER HERE
+```{r}
+sum(is.na(kc_house_data))
+```
+
+
+> There are no NA values
+
 
 
 **Unless otherwise specified, you should use the ggplot2 package for all of the following plots.**
@@ -111,6 +116,19 @@ FOR ME TO FIND YOUR ANSWER. PLEASE USE BLOCK QUOTES WHENEVER YOU ARE TYPEING AN 
 ### Problem 2 - Basic plots
 
 Create a histogram for `price` and for `sqft_living`.
+
+```{r}
+# Histogram for price
+ggplot(kc_house_data) +
+  geom_histogram(aes(x=price))
+
+
+#Histogram for sqft_living
+ggplot(kc_house_data) +
+  geom_histogram(aes(x=sqft_living))
+
+```
+
 
 In addition, compute and display the following statistics for price and for sqft_living:
 
@@ -120,6 +138,15 @@ In addition, compute and display the following statistics for price and for sqft
 * 95th and 99th percentile
 * IQR
 * coefficient of variation
+
+```{r}
+mean(kc_house_data$price)
+mean(kc_house_data$sqft_living)
+median(kc_house_data$price)
+median(kc_house_data$sqft_living)
+
+```
+
 
 There are few different ways to print out a string that contains some literal text along with the value of some variable. For example, let's compute the mean of `price` and store it in a variable.
 
