@@ -139,26 +139,76 @@ In addition, compute and display the following statistics for price and for sqft
 * IQR
 * coefficient of variation
 
-```{r}
-mean(kc_house_data$price)
-mean(kc_house_data$sqft_living)
-median(kc_house_data$price)
-median(kc_house_data$sqft_living)
-
-```
-
-
 There are few different ways to print out a string that contains some literal text along with the value of some variable. For example, let's compute the mean of `price` and store it in a variable.
 
 ```{r}
+# mean
 price_mean <- mean(kc_house_data$price)
 price_mean
+sqft_living_mean <- mean(kc_house_data$sqft_living)
+sqft_living_mean
+
+# median
+price_median <- median(kc_house_data$price)
+price_median
+sqft_living_median <- median(kc_house_data$sqft_living)
+sqft_living_median
+
+# Standard Deviation
+price_stddev <- sd(kc_house_data$price)
+price_stddev
+sqft_living_stddev <- sd(kc_house_data$sqft_living)
+sqft_living_stddev
+
+# min
+price_min <- min(kc_house_data$price)
+price_min
+sqft_living_min <- min(kc_house_data$sqft_living)
+sqft_living_min
+
+# max
+price_max <- max(kc_house_data$price)
+price_max
+sqft_living_max <- max(kc_house_data$sqft_living)
+sqft_living_max
+
+# range
+price_range <- range(kc_house_data$price)
+price_range
+sqft_living_range <- range(kc_house_data$sqft_living)
+sqft_living_range
+
+# 95th percentile
+price_95percentile <- quantile(kc_house_data$price, 0.95)
+price_95percentile
+sqft_living_95percentile <- quantile(kc_house_data$sqft_living, 0.95)
+sqft_living_95percentile
+
+# 99th percentile
+price_99percentile <- quantile(kc_house_data$price, 0.99)
+price_99percentile
+sqft_living_99percentile <- quantile(kc_house_data$sqft_living, 0.99)
+sqft_living_99percentile
+
+# IQR
+price_IQR <- IQR(kc_house_data$price)
+price_IQR
+sqft_living_IQR <- IQR(kc_house_data$sqft_living)
+sqft_living_IQR
+
+#coefficient of variation
+price_cv <- price_stddev/price_mean
+price_cv
+sqft_living_cv <- sqft_living_stddev/sqft_living_mean
+sqft_living_cv
+
 ```
 
 If I wanted to create a little message such as "Mean price = 54088.1", I could use a few different approaches. An old standby is the R `paste()` function.
 
 ```{r}
 paste("Mean price =", price_mean)
+
 ```
 
 A few things to note:
