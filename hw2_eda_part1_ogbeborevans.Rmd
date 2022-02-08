@@ -281,6 +281,17 @@ see that for both of these plot types, ggplot wants an `x` aesthetic to act as a
 
 ```{r box_violin}
 # Boxplots and violin plots
+ggplot(kc_house_data) +
+  geom_boxplot(aes(x=condition, y=price))
+
+ggplot(kc_house_data) +
+  geom_violin(aes(x=condition, y=price))
+
+ggplot(kc_house_data) +
+  geom_boxplot(aes(x=condition, y=sqft_living))
+
+ggplot(kc_house_data) +
+  geom_violin(aes(x=condition, y=sqft_living))
 
 ```
 
@@ -295,7 +306,10 @@ dplyr to do the filtering or boolean indexing (see intro to dataframes Rmd file)
 
 ```{r histo_cond3}
 
-
+kc_house_data_cond3 <- filter(kc_house_data, condition == 3)
+  ggplot(kc_house_data_cond3, aes(x=sqft_living)) +
+    geom_histogram(aes(y=..density..)) +
+    geom_density(alpha=.2, fill="#FF6666")
 
 ```
 
@@ -306,7 +320,11 @@ Create boxplots and/or violin plots showing how prices compare with respect to t
 Summarize your findings.
 
 ```{r boxplots_bedrooms}
+ggplot(kc_house_data) +
+  geom_boxplot(aes(x=price, y=bedrooms))
 
+ggplot(kc_house_data) +
+  geom_violin(aes(x=price, y=bedrooms))
 
 ```
 
