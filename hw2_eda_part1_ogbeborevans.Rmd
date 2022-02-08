@@ -131,7 +131,7 @@ There are few different ways to print out a string that contains some literal te
 If I wanted to create a little message such as "Mean price = 54088.1", I could use a few different approaches. An old standby is the R `paste()` function.
 
 ```{r}
-paste("Mean price =", price_mean)
+# paste("Mean price =", price_mean)
 
 ```
 
@@ -143,13 +143,13 @@ A few things to note:
 Another approach is to use the venerable `sprintf()` function, which is actually based on "C-style printing" from the C language. A nice intro to this is at https://www.gastonsanchez.com/r4strings/c-style-formatting.html.
 
 ```{r}
-sprintf("Mean price = %.2f", price_mean)
+# sprintf("Mean price = %.2f", price_mean)
 ```
 
 If you wrap this with `cat()` function, you can get rid of the output number prefix.
 
 ```{r}
-cat(sprintf("Mean price = %.2f", price_mean))
+# cat(sprintf("Mean price = %.2f", price_mean))
 ```
 
 ```{r summary_stats}
@@ -296,7 +296,7 @@ ggplot(kc_house_data) +
 ```
 
 
-> PUT SUMMARY COMMENTS HERE
+> Box plots display specific statistical points like the median, range, IQR and outliers for house prices for the 5 conditions. In addition to the statistical points, the violin plot also displays the distribution of the data. For instance, the violin plots for house prices show a higher concentration of data (mode) below the IQR, displaying the skewness of the distribution.
 
 
 Repeat the histogram of `sqft_living` but only for houses with a `condition` equal to 3. You can either use
@@ -328,7 +328,7 @@ ggplot(kc_house_data) +
 
 ```
 
-> PUT YOUR SUMMARY COMMENTS HERE
+> The plots indicate a right skewed distribution for price of houses with 2 to 5 bedrooms. This is more pronounced in the violin plot. For example, the violin plot reveals more of a bimodal distribution for the price of houses with 10 bedrooms which was not revealed by the box plot.
 
 ### Problem 3 - Basic bar chart
 
@@ -366,14 +366,14 @@ ggplot(kc_house_data_3000sqft) +
 
 ```
 
-> PUT YOUR SUMMARY COMMENTS HERE
+> The scatter plot reveals a linear relationship between living space (sq_ft) and price
 
 Make one more scatter plot involving `price` and `sqft_living`. But, figure out a way to either change the axis scales or 
 the plotted data itself to use a base 10 logarithmic scale (or transform).
 Write a short paragraph on why one might want to use a log scale or log
 transform of data when plotting.
 
-```{r xy_price_sqft_condition}
+```{r xy_price_sqft_conndition_logscale}
 kc_house_data_3000sqft <- filter(kc_house_data, sqft_living < 3000)
 ggplot(kc_house_data_3000sqft) + 
   geom_point(aes(x=price, y=sqft_living, colour=condition)) +
@@ -382,8 +382,7 @@ ggplot(kc_house_data_3000sqft) +
 
 ```
 
-> 1. More of a linear relationship. Write a short paragraph on why one might want to use a log scale or log
-transform of data when plotting.
+>  Log scale helps depicts data with a wide range of values. In this instance, using a log scale increased the amount of data displayed for houses in condition 1 and 2.
 
 ### Problem 5 - correlations
 
@@ -407,14 +406,13 @@ cor_mat
 ```
 
 ```{r correlation_plot}
-# library(corrplot)
+library(corrplot)
 
 corrplot(cor_mat, method="circle")
 
 ```
 
-
-> Discuss your findings.
+> The correlation plot shows a positive correlation between price and living space, and a negative correlation between age and living space (sqft, floors, bedrooms & bathrooms)
 
 
 
@@ -425,7 +423,7 @@ EDA of a dataframe. I want you to try out the skimr package. If the package
 isn't already installed, just install it. Run the `skim()` function on `kc_house_data` and then write a few short paragraphs describing the types of outputs you get from skimr.
 
 ```{r lib_skimr}
-if (!require("skimr")) install.packages("skimr")
+# install.packages("skimr")
 library(skimr)
 ```
 
@@ -434,6 +432,7 @@ library(skimr)
   skim(kc_house_data)
 ```
 
+> Skimmer summarizes, compacts and presents statistical data of an object. It provides information on the structure of the dataframe or object. It provides statistical values for each property (column in the dataframe), and displays the distrubtion of the data for each property in the form of a histogram. All of which are structured and presented in a table
 
 ## Deliverables for this problem
 
