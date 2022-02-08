@@ -320,11 +320,11 @@ Create boxplots and/or violin plots showing how prices compare with respect to t
 Summarize your findings.
 
 ```{r boxplots_bedrooms}
-ggplot(kc_house_data) +
-  geom_boxplot(aes(x=price, y=bedrooms))
+ggplot(kc_house_data, aes(x=factor(bedrooms), y=price)) +
+  geom_boxplot()
 
 ggplot(kc_house_data) +
-  geom_violin(aes(x=price, y=bedrooms))
+  geom_violin(aes(x=factor(bedrooms), y=price))
 
 ```
 
@@ -335,7 +335,7 @@ ggplot(kc_house_data) +
 Create a bar chart showing the number of houses by grade. 
 
 ```{r bar_grade}
-
+ggplot(kc_house_data) + geom_bar(aes(x=grade))
 
 ```
 
@@ -345,6 +345,8 @@ Create a bar chart showing the number of houses by grade.
 Create a scatter plot of prices vs sqft_living.
 
 ```{r xy_price_sqft}
+ggplot(kc_house_data) + 
+  geom_point(aes(x=price, y=sqft_living))
 
 ```
 
@@ -357,6 +359,10 @@ Create a modified version of the above scatter plot in which:
 You could also facet by condition if you think that makes the plot easier to interpret.
 
 ```{r xy_price_sqft_condition}
+kc_house_data_3000sqft <- filter(kc_house_data, sqft_living < 3000)
+ggplot(kc_house_data_3000sqft) + 
+  geom_point(aes(x=price, y=sqft_living, colour=condition)) +
+  facet_wrap(~condition)
 
 ```
 
@@ -367,7 +373,17 @@ the plotted data itself to use a base 10 logarithmic scale (or transform).
 Write a short paragraph on why one might want to use a log scale or log
 transform of data when plotting.
 
+```{r xy_price_sqft_condition}
+kc_house_data_3000sqft <- filter(kc_house_data, sqft_living < 3000)
+ggplot(kc_house_data_3000sqft) + 
+  geom_point(aes(x=price, y=sqft_living, colour=condition)) +
+  xlab("log(price)") + scale_x_log10() +
+  facet_wrap(~condition)
 
+```
+
+> 1. More of a linear relationship. Write a short paragraph on why one might want to use a log scale or log
+transform of data when plotting.
 
 ### Problem 5 - correlations
 
@@ -386,10 +402,14 @@ Create a correlation matrix and a correlation plot (using corrplot library) whic
 * age (col 22)
 
 ```{r correlation_matrix}
-
+cor_mat <- cor(kc_house_data[,c(3:8,13,14,20:22)])
+cor_mat
 ```
 
 ```{r correlation_plot}
+# library(corrplot)
+
+corrplot(cor_mat, method="circle")
 
 ```
 
@@ -405,12 +425,13 @@ EDA of a dataframe. I want you to try out the skimr package. If the package
 isn't already installed, just install it. Run the `skim()` function on `kc_house_data` and then write a few short paragraphs describing the types of outputs you get from skimr.
 
 ```{r lib_skimr}
+if (!require("skimr")) install.packages("skimr")
 library(skimr)
 ```
 
 ```{r skim}
 # Use skim() function on kc_house_data
-
+  skim(kc_house_data)
 ```
 
 
