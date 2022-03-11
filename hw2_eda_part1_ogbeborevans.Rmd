@@ -1,6 +1,6 @@
 ---
 title: "HW2 - EDA with R - Part 1: Statistics and Plotting"
-author: "misken"
+author: "Osarodion"
 date: "January 9, 2022"
 output:
   html_document:
